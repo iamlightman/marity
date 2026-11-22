@@ -18,6 +18,13 @@ ios/App/App.xcworkspace/xcuserdata/
 ios/App/App.xcodeproj/xcuserdata/
 ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
 
+# Android build artifacts & local properties
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/app/.cxx/
+
 # OS and IDE files
 .DS_Store
 Thumbs.db

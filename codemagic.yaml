@@ -210,6 +210,7 @@ workflows:
           npx cap sync android
       - name: Build & Sign Android Release Bundle (.aab) & APK
         script: |
+          set -e
           echo ">>> Locating Android Release Keystore..."
           STORE_PASS="MarityTrade2026!"
           KEY_ALIAS="marity"
@@ -240,7 +241,60 @@ workflows:
           
           echo ">>> Compiling Android Release App Bundle & APK..."
           cd android
-          ./gradlew bundleRelease assembleRelease
+          chmod +x gradlew
+          ./gradlew bundleRelease assembleRelease --stacktrace
+          
+          echo ">>> Checking generated build outputs..."
+          ls -la app/build/outputs/bundle/release/ 2>/dev/null || true
+          ls -la app/build/outputs/apk/release/ 2>/dev/null || true
+          
+          echo ">>> Signing Release App Bundle (.aab) for Google Play..."
+          AAB_PATH=$(find app/build/outputs/bundle -name "*.aab" | head -n 1)
+          if [ -f "$AAB_PATH" ]; then
+            jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
+              -keystore "$KEYSTORE_PATH" \
+              -storepass "$STORE_PASS" \
+              -keypass "$KEY_PASS" \
+              "$AAB_PATH" "$KEY_ALIAS"
+            echo "✓ Google Play Release AAB successfully signed: $AAB_PATH"
+          fi
+          
+          echo ">>> Signing Release APK (v1 + v2/v3 signing)..."
+          APK_RAW=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          if [ -f "$APK_RAW" ]; then
+            APKSIGNER=$(find $ANDROID_SDK_ROOT/build-tools -name "apksigner" 2>/dev/null | sort -V | tail -n 1)
+            ZIPALIGN=$(find $ANDROID_SDK_ROOT/build-tools -name "zipalign" 2>/dev/null | sort -V | tail -n 1)
+            
+            mkdir -p ../build/android/release
+            ALIGNED_APK="../build/android/release/MarityTrade-v1.0.0-Release.apk"
+            
+            if [ -n "$ZIPALIGN" ] && [ -x "$ZIPALIGN" ]; then
+              "$ZIPALIGN" -v -p 4 "$APK_RAW" "$ALIGNED_APK" || cp "$APK_RAW" "$ALIGNED_APK"
+            else
+              cp "$APK_RAW" "$ALIGNED_APK"
+            fi
+            
+            if [ -n "$APKSIGNER" ] && [ -x "$APKSIGNER" ]; then
+              "$APKSIGNER" sign \
+                --ks "$KEYSTORE_PATH" \
+                --ks-pass "pass:$STORE_PASS" \
+                --ks-key-alias "$KEY_ALIAS" \
+                --key-pass "pass:$KEY_PASS" \
+                --v1-signing-enabled true \
+                --v2-signing-enabled true \
+                --v3-signing-enabled true \
+                "$ALIGNED_APK"
+              echo "✓ Release APK successfully signed with apksigner (v1 + v2 + v3): $ALIGNED_APK"
+              "$APKSIGNER" verify -v "$ALIGNED_APK" || true
+            else
+              jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
+                -keystore "$KEYSTORE_PATH" \
+                -storepass "$STORE_PASS" \
+                -keypass "$KEY_PASS" \
+                "$ALIGNED_APK" "$KEY_ALIAS"
+              echo "✓ Release APK signed with jarsigner: $ALIGNED_APK"
+            fi
+          fi
           
           echo ">>> Signing Release App Bundle (.aab) for Google Play..."
           AAB_PATH=$(find app/build/outputs/bundle -name "*.aab" | head -n 1)
@@ -318,10 +372,13 @@ workflows:
           npx cap sync android
       - name: Build Debug APK
         script: |
+          set -e
           cd android
-          ./gradlew assembleDebug
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
           mkdir -p ../build/android/test_apk
           cp app/build/outputs/apk/debug/*.apk ../build/android/test_apk/MarityTrade-Test-DirectInstall.apk
+          echo "✓ Direct install test APK created successfully: ../build/android/test_apk/MarityTrade-Test-DirectInstall.apk"
     artifacts:
       - build/android/test_apk/*.apk
       - android/app/build/outputs/apk/**/*.apk
