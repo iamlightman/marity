@@ -2,6 +2,13 @@
 node_modules/
 package-lock.json
 
+# Credentials & Private Keys (NEVER COMMIT)
+*.p8
+*.p12
+*.mobileprovision
+*.cer
+*.key
+
 # iOS / Xcode build artifacts
 build/
 DerivedData/
