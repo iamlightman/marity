@@ -1,17 +1,21 @@
 {
   "name": "marity-trade",
   "version": "1.0.0",
-  "description": "Marity Trade — Luxury Fragrance Mobile Application for iOS",
+  "description": "Marity Trade — Luxury Fragrance Mobile Application for iOS & Android",
   "main": "index.html",
   "scripts": {
     "start": "node server.js",
     "build": "node tools/prepare_ios_bundle.js",
-    "cap:add": "cap add ios",
-    "cap:sync": "cap sync ios",
-    "cap:copy": "cap copy ios",
-    "cap:open": "cap open ios"
+    "cap:add": "cap add ios && cap add android",
+    "cap:sync": "cap sync",
+    "cap:sync:ios": "cap sync ios",
+    "cap:sync:android": "cap sync android",
+    "cap:copy": "cap copy",
+    "cap:open:ios": "cap open ios",
+    "cap:open:android": "cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^6.2.0",
     "@capacitor/core": "^6.2.0",
     "@capacitor/ios": "^6.2.0",
     "@capacitor/splash-screen": "^6.0.2",

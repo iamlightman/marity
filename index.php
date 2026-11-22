@@ -583,7 +583,7 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
               <h4 style="font-family:var(--font-serif); font-size:15px; margin-bottom:6px;">Privacy & Customer Rights</h4>
               <p style="font-size:11.5px; color:#64748B; margin-bottom:12px;">Review our data protection commitments, terms of service, or initiate account deletion.</p>
               <div style="display:flex; flex-direction:column; gap:8px;">
-                <a href="policy.php" target="_blank" class="btn-pearl-pill" style="text-align:center; padding:10px; text-decoration:none; color:inherit; font-size:11.5px; display:block;">View Privacy Policy & Data Terms</a>
+                <a href="policy.html" class="btn-pearl-pill" style="text-align:center; padding:10px; text-decoration:none; color:inherit; font-size:11.5px; display:block;">View Privacy Policy & Data Terms</a>
                 <button class="btn-pearl-pill" style="padding:10px; font-size:11.5px; color:#DC2626; border-color:rgba(220,38,38,0.3); font-weight:600;" onclick="window.appConfirmAccountDeletion()">Request Account & Data Deletion</button>
               </div>
             </div>

@@ -643,21 +643,18 @@
             perfume advisors?</p>
           <div style="display:flex; gap:10px;">
             <button class="btn-metallic-pill" style="flex:1;"
-              onclick="alert('Connecting to Marity Paris Concierge via Private Line: +33 1 42 68 55 00');">Call
-              Concierge</button>
+              onclick="window.appOpenAiChat('contact', 'Client Concierge');">Call Concierge</button>
             <button class="btn-pearl-pill" style="flex:1;" onclick="window.appOpenAiChat();">Live Chat</button>
           </div>
         </div>
 
-        <!-- Apple App Store Compliance: Privacy, Terms & Account Deletion (Guideline 5.1.1) -->
+        <!-- Privacy & App Store / Google Play Policy Compliance (Guideline 5.1.1) -->
         <div class="order-card-luxury">
           <h4 style="font-family:var(--font-serif); font-size:15px; margin-bottom:6px;">Privacy & Customer Rights</h4>
-          <p style="font-size:11.5px; color:#64748B; margin-bottom:12px;">Review our data protection commitments, terms
-            of service, or initiate account deletion.</p>
+          <p style="font-size:11.5px; color:#64748B; margin-bottom:12px;">Review our data protection commitments, terms of service, or initiate account deletion.</p>
           <div style="display:flex; flex-direction:column; gap:8px;">
-            <a href="policy.php" target="_blank" class="btn-pearl-pill"
-              style="text-align:center; padding:10px; text-decoration:none; color:inherit; font-size:11.5px; display:block;">View
-              Privacy Policy & Data Terms</a>
+            <a href="policy.html" class="btn-pearl-pill"
+              style="text-align:center; padding:10px; text-decoration:none; color:inherit; font-size:11.5px; display:block;">View Privacy Policy & Data Terms</a>
             <button class="btn-pearl-pill"
               style="padding:10px; font-size:11.5px; color:#DC2626; border-color:rgba(220,38,38,0.3); font-weight:600;"
               onclick="window.appConfirmAccountDeletion()">Request Account & Data Deletion</button>

@@ -158,3 +158,93 @@ workflows:
     artifacts:
       - build/ios/simulator/*.zip
       - /tmp/xcodebuild_logs/*.log
+
+  android-release:
+    name: Marity Trade — Android Release (Google Play Bundle & APK)
+    max_build_duration: 40
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        PACKAGE_NAME: "com.maritytrade.app"
+      java: 17
+      node: 20
+    triggering:
+      events:
+        - push
+        - tag
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+        - pattern: master
+          include: true
+          source: true
+    scripts:
+      - name: Install dependencies & build mobile web bundle
+        script: |
+          echo ">>> Installing Node dependencies..."
+          npm install --legacy-peer-deps
+          echo ">>> Preparing production mobile web bundle..."
+          node tools/prepare_ios_bundle.js
+      - name: Setup Capacitor Android Native Project
+        script: |
+          echo ">>> Initializing Capacitor Android Platform..."
+          if [ ! -d "android/app" ]; then
+            echo ">>> Running npx cap add android to generate Android project..."
+            rm -rf android
+            npx cap add android
+          fi
+          
+          # Inject luxury Android mipmap icons, splash, and colors
+          if [ -d "tools/android_assets" ]; then
+            echo ">>> Injecting luxury Android AppIcons and Splash..."
+            cp -R tools/android_assets/mipmap-* android/app/src/main/res/ 2>/dev/null || true
+            cp -R tools/android_assets/drawable* android/app/src/main/res/ 2>/dev/null || true
+            cp -R tools/android_assets/values/* android/app/src/main/res/values/ 2>/dev/null || true
+          fi
+          
+          # Enforce Google Play compliance (no unnecessary permissions)
+          sed -i.bak '/android.permission.READ_PHONE_STATE/d' android/app/src/main/AndroidManifest.xml 2>/dev/null || true
+          
+          echo ">>> Syncing Capacitor Android..."
+          npx cap sync android
+      - name: Build Android Release Bundle (.aab) & APK
+        script: |
+          echo ">>> Building Android Release App Bundle & APK..."
+          cd android
+          ./gradlew bundleRelease assembleRelease
+    artifacts:
+      - android/app/build/outputs/bundle/**/*.aab
+      - android/app/build/outputs/apk/**/*.apk
+
+  android-debug:
+    name: Marity Trade — Android Direct Install Test APK
+    max_build_duration: 25
+    instance_type: mac_mini_m2
+    environment:
+      java: 17
+      node: 20
+    scripts:
+      - name: Install dependencies & build mobile bundle
+        script: |
+          npm install --legacy-peer-deps
+          node tools/prepare_ios_bundle.js
+          if [ ! -d "android/app" ]; then
+            rm -rf android
+            npx cap add android
+          fi
+          if [ -d "tools/android_assets" ]; then
+            cp -R tools/android_assets/mipmap-* android/app/src/main/res/ 2>/dev/null || true
+            cp -R tools/android_assets/drawable* android/app/src/main/res/ 2>/dev/null || true
+            cp -R tools/android_assets/values/* android/app/src/main/res/values/ 2>/dev/null || true
+          fi
+          npx cap sync android
+      - name: Build Debug APK
+        script: |
+          cd android
+          ./gradlew assembleDebug
+          mkdir -p ../build/android/test_apk
+          cp app/build/outputs/apk/debug/*.apk ../build/android/test_apk/MarityTrade-Test-DirectInstall.apk
+    artifacts:
+      - build/android/test_apk/*.apk
+      - android/app/build/outputs/apk/**/*.apk

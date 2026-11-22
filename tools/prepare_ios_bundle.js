@@ -1,7 +1,7 @@
 /**
- * MARITY TRADE — iOS Web Bundle Preparation
+ * MARITY TRADE — Mobile Web Bundle Preparation (iOS & Android)
  * Copies client assets (HTML, CSS, JS, Assets) into the `public/` directory
- * for Capacitor iOS bundling and Codemagic CI/CD.
+ * for Capacitor iOS / Android bundling and Codemagic CI/CD.
  */
 
 const fs = require('fs');
@@ -33,7 +33,7 @@ function copyRecursive(src, dest) {
 }
 
 // 1. Copy core files
-const filesToCopy = ['index.html', 'manifest.json'];
+const filesToCopy = ['index.html', 'policy.html', 'manifest.json'];
 for (const file of filesToCopy) {
   const src = path.join(rootDir, file);
   const dest = path.join(outDir, file);
