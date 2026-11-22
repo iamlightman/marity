@@ -2,7 +2,6 @@
   "appId": "com.marity.trade",
   "appName": "Marity Trade",
   "webDir": "public",
-  "bundledWebRuntime": false,
   "ios": {
     "contentInset": "automatic",
     "allowsLinkPreview": false,
