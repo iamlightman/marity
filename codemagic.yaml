@@ -13,9 +13,6 @@ workflows:
     integrations:
       app_store_connect: Marity Key
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.marity.trade
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
@@ -67,7 +64,12 @@ workflows:
           pod install --repo-update
       - name: Set up code signing on Xcode project
         script: |
-          echo ">>> Applying Codemagic Code Signing Profiles..."
+          echo ">>> Initializing Apple Keychain and fetching/creating signing files..."
+          keychain initialize
+          app-store-connect fetch-signing-files "$APP_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
           xcode-project use-profiles
       - name: Increment build version
         script: |
@@ -87,6 +89,8 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - "*.dSYM.zip"
     publishing:
+      app_store_connect:
+        auth: integration
       email:
         recipients:
           - admin@maritytrade.com
