@@ -13,8 +13,12 @@
 html, body {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -23,9 +27,12 @@ body {
   color: var(--c-charcoal-deep);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  overflow-x: hidden;
+  align-items: stretch;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: pan-y;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -38,12 +45,15 @@ body {
   position: relative;
   width: 100%;
   max-width: 440px;
-  min-height: 100vh;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
   background: #E8EDF4;
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 60px rgba(15, 23, 42, 0.1);
-  overflow-x: clip;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @media (max-width: 480px) {
@@ -146,11 +156,15 @@ body {
 
 .screen-scroll-view {
   flex: 1;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
   scroll-behavior: smooth;
-  padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)); /* Safe space for bottom fixed dock */
+  padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px)); /* Safe space for bottom fixed dock */
   position: relative;
   z-index: 10;
 }
@@ -909,6 +923,10 @@ body {
   align-items: center;
   gap: 8px;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
   padding-bottom: 8px;
   margin-bottom: 16px;
 }

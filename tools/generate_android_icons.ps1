@@ -1,4 +1,4 @@
-﻿Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Drawing
 
 $workspace = Split-Path -Parent $PSScriptRoot
 $destRoot = Join-Path $workspace "tools/android_assets"

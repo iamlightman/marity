@@ -962,7 +962,7 @@
 .floating-ai-concierge-fab {
   position: fixed;
   right: 18px;
-  bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(130px + env(safe-area-inset-bottom, 0px));
   z-index: 95;
   width: 50px;
   height: 50px;
@@ -1095,7 +1095,10 @@
   gap: 8px;
   padding: 10px 16px;
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
   border-bottom: 1px solid rgba(241, 245, 249, 0.9);
   scrollbar-width: none;
   background: rgba(255, 255, 255, 0.7);
