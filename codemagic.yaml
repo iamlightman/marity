@@ -17,6 +17,7 @@ workflows:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
         APP_ID: "com.marity.trade"
+        DEVELOPMENT_TEAM: "T3RLFNGN9A"
       xcode: latest
       cocoapods: default
       node: 20
@@ -72,6 +73,9 @@ workflows:
             --type IOS_APP_STORE \
             --create
           keychain add-certificates
+          
+          echo ">>> Applying code signing profiles to Xcode project..."
+          cd ios/App
           xcode-project use-profiles
       - name: Increment build version
         script: |
