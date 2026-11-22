@@ -1,0 +1,109 @@
+<?php
+/**
+ * MARITY TRADE — PRIVACY POLICY & CUSTOMER DATA TERMS
+ * Compliant with Apple App Store Review Guideline 5.1.1 & Global Privacy Standards
+ */
+require_once __DIR__ . '/config.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Privacy Policy & Data Security — Marity Trade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/liquid-metal.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    body {
+      background: #0E121B;
+      color: #E2E8F0;
+      font-family: var(--font-sans);
+      padding: 24px 20px calc(40px + env(safe-area-inset-bottom, 0px)) 20px;
+      line-height: 1.6;
+    }
+    .policy-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 28px 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .policy-tag {
+      font-size: 11px;
+      color: var(--c-champagne-gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: #FFFFFF;
+      margin: 22px 0 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 6px;
+    }
+    p, li {
+      font-size: 13px;
+      color: #94A3B8;
+    }
+    ul {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #E5C378 0%, #CFA348 100%);
+      color: #11151F;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="policy-card">
+    <div class="policy-tag">Marity Trade • Client Data Privacy</div>
+    <h1>Privacy Policy & Terms</h1>
+    <p>Last updated: November 2026 • Compliant with Apple App Store Review Guideline 5.1.1</p>
+
+    <h2>1. Data Collection & Usage</h2>
+    <p>Marity Trade collects only the essential customer data required to fulfill luxury fragrance orders and maintain customer account records:</p>
+    <ul>
+      <li><strong>Contact Information:</strong> Full name, delivery address, phone number, and email address for order fulfillment and dispatch notification.</li>
+      <li><strong>Order Information:</strong> Curated fragrance selection, bottle sizes, custom gold cap engraving initials, and transaction receipts.</li>
+      <li><strong>Account Security:</strong> One-time 4-digit verification codes sent via SMS/Email to secure access to delivery tracking.</li>
+    </ul>
+
+    <h2>2. Physical Goods Exemption (Apple Guideline 3.1.5a)</h2>
+    <p>All items sold via Marity Trade are physical luxury goods (flacons, pure extraits, case allocations, and coffrets) dispatched via DHL Express Priority. In accordance with Apple App Store Review Guideline 3.1.5(a), physical merchandise purchases are settled securely via licensed payment gateways and mobile money providers.</p>
+
+    <h2>3. In-App Account & Data Deletion (Guideline 5.1.1v)</h2>
+    <p>Every customer reserves the absolute right to purge all personal identification data and customer records. You may trigger account deletion directly inside the application via the <strong>Client Privilège → Request Account & Data Deletion</strong> control, or by contacting our Data Protection Officer at privacy@maritytrade.online.</p>
+
+    <h2>4. Delivery & Customer Concierge</h2>
+    <p>All orders are hand-inspected and dispatched with verified arrival within <strong>12 to 24 hours</strong> across Accra and priority regional zones. For inquiries, contact the Marity Trade Boutique Concierge at +233 24 925 2725 or info@maritytrade.online.</p>
+
+    <a href="index.php" class="back-btn">← Return to Application</a>
+  </div>
+
+</body>
+</html>

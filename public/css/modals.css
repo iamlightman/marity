@@ -1,0 +1,1460 @@
+/* ==========================================================================
+   MARITY FRAGRANCES — ULTRA-PREMIUM MODALS, DRAWERS & SHEETS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   SHEET BACKDROPS & PANELS
+   -------------------------------------------------------------------------- */
+
+.glass-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 18, 27, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+}
+
+.glass-sheet-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.glass-sheet-panel {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 249, 254, 0.94) 100%);
+  backdrop-filter: blur(var(--blur-modal)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-modal)) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 32px 32px 0 0;
+  box-shadow: 
+    var(--glass-bevel-top),
+    0 -16px 48px -4px rgba(14, 18, 27, 0.2);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 101;
+}
+
+.glass-sheet-backdrop.active .glass-sheet-panel {
+  transform: translateX(-50%) translateY(0);
+}
+
+.sheet-handle-pill {
+  width: 40px;
+  height: 4.5px;
+  border-radius: 9999px;
+  background: rgba(180, 192, 208, 0.65);
+  margin: 12px auto 6px auto;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   DEDICATED MODAL HEADER BAR & CANCEL CLOSE BUTTON (iOS HIG COMPLIANT)
+   Ensures the X cancel button is in the right place and NEVER covers any text
+   -------------------------------------------------------------------------- */
+
+.modal-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 18px 12px 20px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  position: relative;
+  z-index: 20;
+}
+
+.modal-header-title-box {
+  flex: 1;
+  padding-right: 14px;
+  min-width: 0;
+}
+
+.modal-header-title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: #11151F;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-header-subtitle {
+  font-size: 11px;
+  color: #64748B;
+  display: block;
+  margin-top: 2px;
+}
+
+/* High-contrast, tactile circular X cancel button */
+.glass-modal-close-btn,
+.modal-close-cancel-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+  color: #0F172A;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  padding: 0;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.glass-modal-close-btn svg,
+.modal-close-cancel-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: #0F172A;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.glass-modal-close-btn:hover,
+.modal-close-cancel-btn:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  color: #B8891B;
+  transform: scale(1.08);
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.18);
+}
+
+.glass-modal-close-btn:active,
+.modal-close-cancel-btn:active {
+  transform: scale(0.92);
+  background: #E2E8F0;
+  border-color: #64748B;
+}
+
+/* --------------------------------------------------------------------------
+   PRODUCT DETAILS MODAL
+   -------------------------------------------------------------------------- */
+
+.product-detail-content {
+  overflow-y: auto;
+  padding: 10px 20px 28px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.product-detail-content::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-stage {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.95) 0%, rgba(235, 242, 250, 0.5) 70%, transparent 100%);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.gallery-main-img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 24px rgba(17, 21, 31, 0.18));
+  transition: transform 0.3s ease;
+}
+
+.engraving-cap-preview {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #B8891B;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.engraving-cap-preview.visible {
+  opacity: 1;
+}
+
+.gallery-thumbs-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.gallery-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(220, 226, 235, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gallery-thumb img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.gallery-thumb.active {
+  border-color: var(--c-champagne-gold);
+  box-shadow: 0 0 0 2px var(--c-champagne-gold-light);
+  transform: translateY(-2px);
+}
+
+.detail-header-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.detail-brand {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-champagne-gold-dark);
+}
+
+.detail-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: #11151F;
+  line-height: 1.15;
+  margin: 2px 0 6px 0;
+}
+
+.detail-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #64748B;
+  margin-bottom: 16px;
+}
+
+.rating-stars-gold {
+  color: #E6C275;
+  display: flex;
+  gap: 1px;
+}
+
+.detail-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.detail-price {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: 700;
+  color: #11151F;
+}
+
+.detail-stock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2E7D32;
+}
+
+.stock-dot-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2E7D32;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+/* Bottle Size Selector */
+.size-selector-block {
+  margin-bottom: 20px;
+}
+
+.selector-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4A5568;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.size-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.size-chip {
+  padding: 10px 8px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(220, 226, 235, 0.85);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.size-chip:hover {
+  background: #FFF;
+}
+
+.size-chip.active {
+  background: #FFF;
+  border-color: #11151F;
+  box-shadow: 0 4px 14px rgba(17, 21, 31, 0.12);
+  transform: translateY(-2px);
+}
+
+.size-chip-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #11151F;
+}
+
+.size-chip-price {
+  font-size: 11px;
+  color: #64748B;
+  font-weight: 500;
+}
+
+/* Olfactory Pyramid Accordion */
+.pyramid-block {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.pyramid-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #11151F;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.note-tier {
+  margin-bottom: 10px;
+}
+
+.note-tier:last-child {
+  margin-bottom: 0;
+}
+
+.note-tier-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--c-champagne-gold-dark);
+  margin-bottom: 4px;
+}
+
+/* Flacon Engraving Section */
+.engraving-box {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(246, 248, 252, 0.65) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 20px;
+}
+
+.engraving-input-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.engraving-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: #FFF;
+  color: #11151F;
+  -webkit-appearance: none;
+  touch-action: manipulation;
+}
+
+/* Quantity and Add to Bag Bar */
+.detail-cta-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.qty-counter {
+  display: flex;
+  align-items: center;
+  background: #FFF;
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  border-radius: 9999px;
+  padding: 4px 8px;
+}
+
+.qty-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #11151F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-num {
+  width: 28px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.detail-add-bag-btn {
+  flex: 1;
+  padding: 13px 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   SHOPPING CART & BAG DRAWER
+   -------------------------------------------------------------------------- */
+
+.cart-drawer-content {
+  overflow-y: auto;
+  padding: 14px 20px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 75vh;
+}
+
+.free-shipping-bar-box {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+
+.shipping-bar-track {
+  width: 100%;
+  height: 5px;
+  background: #E2E8F0;
+  border-radius: 9999px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.shipping-bar-fill {
+  height: 100%;
+  background: var(--c-champagne-badge);
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+}
+
+.cart-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  padding: 10px;
+}
+
+.cart-item-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(240, 244, 250, 0.6) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cart-item-thumb img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-title {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #11151F;
+}
+
+.cart-item-spec {
+  font-size: 11px;
+  color: #64748B;
+}
+
+.cart-item-price {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #11151F;
+  margin-top: 2px;
+}
+
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.cart-remove-btn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.cart-remove-btn:hover {
+  color: #E53E3E;
+}
+
+/* Samples Section */
+.samples-selector-box {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.samples-chips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.sample-pick-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #FFF;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.sample-pick-chip.selected {
+  border-color: var(--c-champagne-gold);
+  background: #FCF9F0;
+}
+
+/* --------------------------------------------------------------------------
+   RESTYLED COMPACT LUXURY PROMO CODE CAPSULE
+   -------------------------------------------------------------------------- */
+
+.promo-capsule-box {
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.promo-input-capsule {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 12px;
+  padding: 4px 6px 4px 12px;
+  gap: 8px;
+  box-shadow: 0 1.5px 4px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.promo-input-capsule:focus-within {
+  border-color: var(--c-champagne-gold);
+  box-shadow: 0 0 0 3px rgba(229, 195, 120, 0.2);
+}
+
+.promo-icon-svg {
+  width: 15px;
+  height: 15px;
+  color: #9A7B35;
+  flex-shrink: 0;
+}
+
+.promo-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 6px 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #11151F;
+  outline: none;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.promo-input::placeholder {
+  font-size: 12.5px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #94A3B8;
+}
+
+.btn-promo-apply {
+  background: #11151F;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-promo-apply:hover {
+  background: #1E293B;
+}
+
+.btn-promo-apply:active {
+  transform: scale(0.96);
+}
+
+.promo-status-badge {
+  font-size: 11.5px;
+  margin-top: 5px;
+  min-height: 18px;
+}
+
+.promo-applied-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  color: #15803D;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.promo-remove-x {
+  background: none;
+  border: none;
+  color: #DC2626;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+  margin-left: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   RESTYLED LUXURY CART SUMMARY RECEIPT
+   -------------------------------------------------------------------------- */
+
+.cart-summary-block {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.92) 100%);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  margin-top: 6px;
+  margin-bottom: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #64748B;
+}
+
+.summary-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748B;
+  font-weight: 450;
+}
+
+.delivery-time-pill {
+  font-size: 10px;
+  background: #F1F5F9;
+  color: #475569;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.summary-val {
+  font-weight: 600;
+  color: #1E293B;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-val.discount-val {
+  color: #9A7B35;
+}
+
+.badge-free-delivery {
+  background: #DCFCE7;
+  color: #15803D;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.summary-divider {
+  border: none;
+  border-top: 1px dashed rgba(203, 213, 225, 0.8);
+  margin: 4px 0 2px 0;
+}
+
+.summary-row.total-row {
+  border-top: none;
+  padding-top: 2px;
+  margin-top: 0;
+}
+
+.total-label-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.total-title {
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #11151F;
+  letter-spacing: -0.01em;
+}
+
+.total-sub {
+  font-size: 10px;
+  color: #94A3B8;
+  margin-top: 1px;
+}
+
+.total-amount {
+  font-size: 17px;
+  font-weight: 800;
+  color: #11151F;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   CHECKOUT MULTI-STEP MODAL
+   -------------------------------------------------------------------------- */
+
+.checkout-steps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 14px 10px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.step-indicator {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94A3B8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-indicator.active {
+  color: #11151F;
+}
+
+.checkout-step-body {
+  padding: 16px 0;
+  display: none;
+}
+
+.checkout-step-body.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #4A5568;
+  margin-bottom: 4px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  font-size: 16px; /* Prevents unwanted iOS Safari viewport auto-zoom */
+  background: #FFF;
+  color: #11151F;
+  -webkit-appearance: none;
+  touch-action: manipulation;
+}
+
+.form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.apple-pay-box {
+  background: #000;
+  border-radius: 18px;
+  padding: 16px;
+  color: #FFF;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.apple-pay-box:active {
+  transform: scale(0.98);
+}
+
+/* --------------------------------------------------------------------------
+   SEARCH OVERLAY
+   -------------------------------------------------------------------------- */
+
+.search-overlay-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-input-field {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  color: #11151F;
+  outline: none;
+}
+
+.search-quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 20px;
+}
+
+.search-quick-tag {
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #4A5568;
+  cursor: pointer;
+}
+
+.search-results-list {
+  padding: 0 20px 20px 20px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+/* ==========================================================================
+   FLOATING AI CONCIERGE FAB & MARITY AI CHAT ASSISTANT
+   ========================================================================== */
+
+.floating-ai-concierge-fab {
+  position: fixed;
+  right: 18px;
+  bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  z-index: 95;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: rgba(17, 21, 31, 0.94);
+  color: #FFFFFF;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(229, 195, 120, 0.55);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.28), 0 2px 8px rgba(229, 195, 120, 0.3);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-ai-concierge-fab:active {
+  transform: scale(0.92);
+}
+
+.fab-icon-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab-svg {
+  width: 22px;
+  height: 22px;
+  color: #E5C378;
+}
+
+.fab-pulse-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 0 2px #11151F;
+}
+
+/* Header Action Dot Indicator */
+.ai-header-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #E5C378;
+  border: 1.5px solid #FFFFFF;
+}
+
+/* AI Chat Modal Sheet */
+.ai-chat-panel {
+  max-height: 88vh;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+}
+
+.ai-chat-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px 12px 18px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.ai-header-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-avatar-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #11151F 0%, #2D3748 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid rgba(229, 195, 120, 0.5);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+}
+
+.ai-avatar-monogram {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #E5C378;
+}
+
+.ai-status-indicator {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22C55E;
+  border: 2px solid #FFFFFF;
+}
+
+.ai-badge-pill {
+  background: #FDF4DC;
+  color: #9A7B35;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Quick Action Chips */
+.ai-quick-chips-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.9);
+  scrollbar-width: none;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.ai-quick-chips-row::-webkit-scrollbar {
+  display: none;
+}
+
+.ai-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+}
+
+.ai-chip-btn svg {
+  width: 12px;
+  height: 12px;
+  color: #9A7B35;
+}
+
+.ai-chip-btn:hover {
+  border-color: var(--c-champagne-gold);
+  background: #FCF9F0;
+  color: #11151F;
+}
+
+.ai-chip-btn:active {
+  transform: scale(0.97);
+}
+
+/* Chat Messages Scroll Stream */
+.ai-chat-messages-container {
+  flex: 1;
+  padding: 14px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ai-msg-row {
+  display: flex;
+  gap: 8px;
+  max-width: 88%;
+}
+
+.ai-msg-row.assistant {
+  align-self: flex-start;
+}
+
+.ai-msg-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.ai-bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.ai-msg-row.assistant .ai-bubble {
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  color: #1E293B;
+  border-top-left-radius: 4px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.ai-msg-row.user .ai-bubble {
+  background: #11151F;
+  color: #FFFFFF;
+  border-top-right-radius: 4px;
+}
+
+.ai-msg-time {
+  font-size: 9.5px;
+  color: #94A3B8;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Chat Interactive Product Card */
+.chat-product-card {
+  display: flex;
+  gap: 10px;
+  background: #F8FAFC;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 12px;
+  padding: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.chat-prod-img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #FFFFFF;
+  padding: 4px;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  flex-shrink: 0;
+}
+
+.chat-prod-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-prod-name {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #11151F;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-prod-notes {
+  font-size: 10.5px;
+  color: #64748B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.chat-prod-price {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #11151F;
+  margin-top: 2px;
+}
+
+.chat-prod-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.chat-action-btn-primary {
+  background: #11151F;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.chat-action-btn-primary:hover {
+  background: #1E293B;
+}
+
+.chat-action-btn-small {
+  background: #FFFFFF;
+  color: #334155;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Chat Order Tracking Card */
+.chat-order-card {
+  background: #F8FAFC;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.chat-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.chat-order-ref {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  color: #11151F;
+}
+
+.chat-order-status-pill {
+  background: #DCFCE7;
+  color: #15803D;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.chat-timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.chat-timeline-step.active {
+  font-weight: 700;
+  color: #11151F;
+}
+
+.chat-timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  background: #E2E8F0;
+  color: #64748B;
+  flex-shrink: 0;
+}
+
+.chat-timeline-step.active .chat-timeline-dot {
+  background: #E5C378;
+  color: #11151F;
+}
+
+/* Chat Admin Contact Card */
+.chat-admin-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(229, 195, 120, 0.6);
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-contact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.chat-contact-btn.whatsapp {
+  background: #25D366;
+  color: #FFFFFF;
+  border: none;
+}
+
+.chat-contact-btn.phone {
+  background: #11151F;
+  color: #FFFFFF;
+  border: none;
+}
+
+.chat-contact-btn.ticket {
+  background: #F8FAFC;
+  color: #1E293B;
+  border: 1px solid #CBD5E1;
+}
+
+/* Chat Input Bar */
+.ai-chat-input-bar {
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px;
+  background: #FFFFFF;
+  border-top: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.ai-input-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #F1F5F9;
+  border-radius: 9999px;
+  padding: 4px 6px 4px 14px;
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  transition: all 0.2s ease;
+}
+
+.ai-input-form:focus-within {
+  background: #FFFFFF;
+  border-color: var(--c-champagne-gold);
+  box-shadow: 0 0 0 3px rgba(229, 195, 120, 0.2);
+}
+
+.ai-chat-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  color: #11151F;
+  outline: none;
+}
+
+.ai-chat-input::placeholder {
+  font-size: 13px;
+  color: #94A3B8;
+}
+
+.ai-chat-send-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #11151F;
+  color: #FFFFFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.ai-chat-send-btn:hover {
+  background: #1E293B;
+}
+
+.ai-chat-send-btn:active {
+  transform: scale(0.92);
+}
+
+.ai-chat-send-btn svg {
+  width: 15px;
+  height: 15px;
+  margin-left: 2px;
+}

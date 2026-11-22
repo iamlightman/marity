@@ -1,0 +1,32 @@
+{
+  "name": "marity-trade",
+  "version": "1.0.0",
+  "description": "Marity Trade — Luxury Fragrance Mobile Application for iOS",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node tools/prepare_ios_bundle.js",
+    "cap:add": "cap add ios",
+    "cap:sync": "cap sync ios",
+    "cap:copy": "cap copy ios",
+    "cap:open": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/ios": "^6.2.0",
+    "@capacitor/splash-screen": "^6.0.2",
+    "@capacitor/status-bar": "^6.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  },
+  "keywords": [
+    "marity-trade",
+    "luxury-fragrances",
+    "ios-app",
+    "codemagic",
+    "capacitor"
+  ],
+  "author": "Marity Trade",
+  "license": "UNLICENSED"
+}

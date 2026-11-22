@@ -1,0 +1,143 @@
+# ==============================================================================
+# MARITY TRADE — CODEMAGIC CI/CD WORKFLOW CONFIGURATION
+# Dual Pipeline:
+#   1. ios-release: Full App Store / TestFlight Production Build & Code Signing
+#   2. ios-debug: Fast Simulator / Verification Build (Zero Apple Certs Needed)
+# ==============================================================================
+
+workflows:
+  ios-release:
+    name: Marity Trade — iOS Release (App Store / TestFlight)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.marity.trade
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        APP_ID: "com.marity.trade"
+      xcode: latest
+      cocoapods: default
+      node: 20
+    triggering:
+      events:
+        - push
+        - tag
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+        - pattern: master
+          include: true
+          source: true
+    scripts:
+      - name: Install dependencies & build web bundle
+        script: |
+          echo ">>> Installing Node dependencies..."
+          npm install --legacy-peer-deps
+          echo ">>> Preparing production iOS web bundle..."
+          node tools/prepare_ios_bundle.js
+      - name: Setup Capacitor iOS Native Project
+        script: |
+          echo ">>> Initializing Capacitor iOS Platform..."
+          if [ ! -d "ios/App" ]; then
+            npx cap add ios
+          fi
+          
+          # Inject custom high-res luxury icons & splash screen
+          if [ -d "tools/ios_assets" ]; then
+            echo ">>> Injecting luxury AppIcon & Splash assets..."
+            mkdir -p ios/App/App/Assets.xcassets/AppIcon.appiconset
+            mkdir -p ios/App/App/Assets.xcassets/Splash.imageset
+            cp -R tools/ios_assets/AppIcon.appiconset/* ios/App/App/Assets.xcassets/AppIcon.appiconset/ 2>/dev/null || true
+            cp -R tools/ios_assets/Splash.imageset/* ios/App/App/Assets.xcassets/Splash.imageset/ 2>/dev/null || true
+            cp tools/ios_assets/Info.plist ios/App/App/Info.plist 2>/dev/null || true
+          fi
+          
+          echo ">>> Syncing Capacitor..."
+          npx cap sync ios
+      - name: Install CocoaPods dependencies
+        script: |
+          echo ">>> Installing CocoaPods..."
+          cd ios/App
+          pod install --repo-update
+      - name: Set up code signing on Xcode project
+        script: |
+          echo ">>> Applying Codemagic Code Signing Profiles..."
+          xcode-project use-profiles
+      - name: Increment build version
+        script: |
+          echo ">>> Setting App Version and Build Number..."
+          cd ios/App
+          BUILD_NUM=$(git rev-list --count HEAD 2>/dev/null || echo 1)
+          agvtool new-version -all $BUILD_NUM
+          agvtool new-marketing-version 1.0.0
+      - name: Build IPA for App Store
+        script: |
+          echo ">>> Building and packaging IPA..."
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - "*.dSYM.zip"
+    publishing:
+      email:
+        recipients:
+          - admin@maritytrade.com
+        notify:
+          success: true
+          failure: true
+
+  ios-debug:
+    name: Marity Trade — iOS Simulator Build (No Certs Required)
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      xcode: latest
+      cocoapods: default
+      node: 20
+    scripts:
+      - name: Install dependencies & build web bundle
+        script: |
+          npm install --legacy-peer-deps
+          node tools/prepare_ios_bundle.js
+          if [ ! -d "ios/App" ]; then
+            npx cap add ios
+          fi
+          if [ -d "tools/ios_assets" ]; then
+            mkdir -p ios/App/App/Assets.xcassets/AppIcon.appiconset
+            mkdir -p ios/App/App/Assets.xcassets/Splash.imageset
+            cp -R tools/ios_assets/AppIcon.appiconset/* ios/App/App/Assets.xcassets/AppIcon.appiconset/ 2>/dev/null || true
+            cp -R tools/ios_assets/Splash.imageset/* ios/App/App/Assets.xcassets/Splash.imageset/ 2>/dev/null || true
+            cp tools/ios_assets/Info.plist ios/App/App/Info.plist 2>/dev/null || true
+          fi
+          npx cap sync ios
+      - name: Install CocoaPods
+        script: |
+          cd ios/App
+          pod install
+      - name: Build for iOS Simulator
+        script: |
+          echo ">>> Compiling Marity Trade for iOS Simulator..."
+          xcodebuild -workspace "$XCODE_WORKSPACE" \
+            -scheme "$XCODE_SCHEME" \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -derivedDataPath build/derivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            clean build
+          
+          mkdir -p build/ios/simulator
+          cd build/derivedData/Build/Products/Debug-iphonesimulator
+          zip -r -X ../../../../../build/ios/simulator/MarityTrade-Simulator.app.zip App.app
+    artifacts:
+      - build/ios/simulator/*.zip
+      - /tmp/xcodebuild_logs/*.log

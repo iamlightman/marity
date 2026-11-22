@@ -1,0 +1,669 @@
+/* ==========================================================================
+   MARITY FRAGRANCES — ULTRA-PREMIUM LIQUID METALLIC GLASS SYSTEM
+   Haute Parfumerie Material Design Tokens & Refined Glass Refraction
+   ========================================================================== */
+
+:root {
+  /* Luxury Palette Tokens */
+  --c-pearl-white: #FAF9F6;
+  --c-pure-white: #FFFFFF;
+  --c-soft-silver: #E2E8F0;
+  --c-platinum: #E8ECF2;
+  --c-platinum-border: rgba(255, 255, 255, 0.85);
+  
+  /* Champagne Gold Accents */
+  --c-champagne-gold: #D4AF37;
+  --c-champagne-gold-light: #F9E7B3;
+  --c-champagne-gold-dark: #A68019;
+  --c-champagne-badge: linear-gradient(135deg, #FDE6A8 0%, #E6C275 50%, #C99A2D 100%);
+  
+  /* Deep Luxury Charcoal */
+  --c-charcoal-deep: #0D1117;
+  --c-charcoal-card: #151A24;
+  --c-charcoal-pill: #11151F;
+  --c-slate-muted: #64748B;
+  --c-slate-text: #334155;
+
+  /* Glass Surface Tokens */
+  --glass-header-bg: rgba(255, 255, 255, 0.75);
+  --glass-card-bg: rgba(255, 255, 255, 0.78);
+  --glass-card-border: rgba(255, 255, 255, 0.9);
+  --glass-nav-bg: rgba(255, 255, 255, 0.82);
+  --glass-pill-bg: linear-gradient(180deg, #1A1F2C 0%, #10141D 100%);
+  
+  /* Authentic Specular & Depth Shadows (No Neon Glows) */
+  --glass-bevel-top: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.98);
+  --glass-bevel-bottom: inset 0 -1px 2px 0 rgba(195, 205, 218, 0.35);
+  --glass-card-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.08);
+  --glass-card-hover: 0 18px 40px -6px rgba(15, 23, 42, 0.12);
+  --glass-pill-shadow: 0 6px 18px -2px rgba(17, 21, 31, 0.28);
+
+  /* Blur Presets */
+  --blur-nav: 28px;
+  --blur-card: 24px;
+  --blur-modal: 32px;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'SF Pro Text', sans-serif;
+  --font-display: 'Cinzel', 'Playfair Display', serif;
+}
+
+/* ==========================================================================
+   LIQUID METAL ENVIRONMENT CANVAS
+   Luminous, fluid platinum silk background with soft specular waves.
+   ========================================================================== */
+
+.liquid-metal-canvas {
+  position: relative;
+  background-color: #E7ECF3;
+  background-image: 
+    radial-gradient(ellipse 95% 65% at 85% 10%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 65%),
+    radial-gradient(ellipse 75% 55% at 15% 42%, rgba(224, 232, 242, 0.85) 0%, rgba(224, 232, 242, 0) 70%),
+    radial-gradient(circle at 80% 80%, rgba(212, 222, 235, 0.75) 0%, rgba(212, 222, 235, 0) 55%),
+    linear-gradient(180deg, #F3F6FA 0%, #E3E9F1 30%, #D8E0EA 65%, #EAF0F7 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* Subtle fluid metallic silk waves - Professional Editorial Texture (0 Text, 0 Mockup) */
+.liquid-metal-canvas::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 920px;
+  background: url('../assets/liquid_metal_editorial.png') top center / cover no-repeat;
+  opacity: 0.36;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Specular light sweep across top */
+.liquid-metal-canvas::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 140%;
+  height: 420px;
+  background: radial-gradient(ellipse 65% 45% at 50% 18%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   PEARL-GLASS PRODUCT CARDS
+   ========================================================================== */
+
+.glass-product-card {
+  position: relative;
+  background: var(--glass-card-bg);
+  backdrop-filter: blur(var(--blur-card)) saturate(175%);
+  -webkit-backdrop-filter: blur(var(--blur-card)) saturate(175%);
+  border-radius: 20px;
+  border: 1px solid var(--glass-card-border);
+  box-shadow: 
+    var(--glass-bevel-top),
+    var(--glass-bevel-bottom),
+    var(--glass-card-shadow);
+  padding: 10px 10px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.glass-product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    var(--glass-bevel-top),
+    var(--glass-bevel-bottom),
+    var(--glass-card-hover);
+}
+
+/* Specular diagonal glass sheen across card upper portion */
+.glass-product-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(175deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.04) 80%, transparent 100%);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Stage container holding the flacon - compact, balanced proportion */
+.card-img-stage {
+  position: relative;
+  width: 100%;
+  height: 114px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 68%, rgba(255, 255, 255, 0.85) 0%, rgba(230, 237, 246, 0.35) 65%, transparent 100%);
+  cursor: pointer;
+}
+
+.card-img-stage img {
+  max-width: 82%;
+  max-height: 96px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.16));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-product-card:hover .card-img-stage img {
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* ==========================================================================
+   METALLIC PILL BUTTONS (CLEAN LUXURY INDUSTRIAL FINISH)
+   ========================================================================== */
+
+.btn-metallic-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background: var(--glass-pill-bg);
+  color: var(--c-pearl-white);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
+    var(--glass-pill-shadow);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.btn-metallic-pill:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
+    0 8px 24px -2px rgba(17, 21, 31, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-metallic-pill:active {
+  transform: scale(0.97);
+  box-shadow: 
+    inset 0 1px 2px 0 rgba(0, 0, 0, 0.6),
+    0 3px 10px rgba(17, 21, 31, 0.2);
+}
+
+/* Specular highlight line along button top */
+.btn-metallic-pill::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.75) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Secondary Pearl Glass Pill */
+.btn-pearl-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(242, 246, 252, 0.75) 100%);
+  color: var(--c-charcoal-deep);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    var(--glass-bevel-top),
+    inset 0 -1px 1.5px 0 rgba(190, 202, 216, 0.3),
+    0 4px 12px -2px rgba(18, 25, 38, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-pearl-pill:hover {
+  background: #FFF;
+  box-shadow: 0 6px 18px -2px rgba(18, 25, 38, 0.12);
+  transform: translateY(-1px);
+}
+
+.btn-pearl-pill:active {
+  transform: scale(0.96);
+}
+
+/* Circular frosted glass lens button */
+.glass-icon-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 2px 0 rgba(190, 202, 216, 0.25),
+    0 8px 20px -3px rgba(18, 25, 38, 0.08);
+  color: var(--c-charcoal-deep);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, box-shadow 0.2s ease;
+  overflow: visible;
+}
+
+.glass-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 1),
+    0 10px 24px -2px rgba(18, 25, 38, 0.12);
+}
+
+.glass-icon-btn:active {
+  transform: scale(0.93);
+}
+
+/* ==========================================================================
+   CATEGORY PODS BAR (FROSTED RECTANGULAR POD CONTAINER)
+   ========================================================================== */
+
+.glass-category-bar {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(244, 248, 254, 0.6) 100%);
+  backdrop-filter: blur(var(--blur-card)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--blur-card)) saturate(180%);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    var(--glass-bevel-top),
+    var(--glass-bevel-bottom),
+    0 10px 28px -6px rgba(18, 25, 38, 0.06);
+  padding: 14px 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.cat-pod-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  padding: 2px;
+  transition: transform 0.2s ease;
+}
+
+.cat-pod-item:active {
+  transform: scale(0.94);
+}
+
+.cat-pod-circle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 32%, rgba(255, 255, 255, 0.98) 0%, rgba(236, 242, 250, 0.75) 65%, rgba(220, 230, 242, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1.5px 2px 0 rgba(180, 195, 212, 0.35),
+    0 6px 14px -2px rgba(18, 25, 38, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.cat-pod-circle img {
+  width: 74%;
+  height: 74%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(15, 23, 42, 0.15));
+  transition: transform 0.25s ease;
+}
+
+.cat-pod-item:hover .cat-pod-circle img {
+  transform: scale(1.08);
+}
+
+.cat-pod-item.active .cat-pod-circle {
+  border-color: var(--c-champagne-gold);
+  box-shadow: 
+    0 0 0 2px var(--c-champagne-gold-light),
+    0 8px 18px -2px rgba(212, 175, 55, 0.25);
+  transform: translateY(-2px);
+}
+
+.cat-pod-label {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--c-charcoal-deep);
+  letter-spacing: 0.01em;
+}
+
+/* ==========================================================================
+   BADGES (CHAMPAGNE GOLD & PEARL)
+   ========================================================================== */
+
+.badge-champagne {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--c-champagne-badge);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 6px rgba(197, 155, 39, 0.22);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  color: #382705;
+}
+
+.badge-pearl {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--c-slate-muted);
+}
+
+/* ==========================================================================
+   WATER POURING TRANSITION & FLUID MOTION SYSTEM
+   ========================================================================== */
+
+/* Liquid Page View Cascade */
+.view-container {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.view-container.active {
+  display: block;
+  animation: waterPourCascade 0.46s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes waterPourCascade {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.988);
+    filter: blur(5px);
+  }
+  65% {
+    filter: blur(0.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Sliding Liquid Water Pour Pill inside Floating Capsule Dock */
+.dock-liquid-pour-pill {
+  position: absolute;
+  top: 7px;
+  height: 44px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8F4EA 60%, #F0E8D4 100%);
+  border: 1.5px solid #E5C378;
+  box-shadow: 
+    0 4px 16px rgba(15, 23, 42, 0.12),
+    inset 0 1.5px 2px #FFFFFF,
+    inset 0 -1.5px 2px rgba(229, 195, 120, 0.35);
+  z-index: 1;
+  pointer-events: none;
+  will-change: left, width, transform;
+  transition: 
+    left 0.44s cubic-bezier(0.34, 1.45, 0.64, 1), 
+    width 0.38s cubic-bezier(0.34, 1.45, 0.64, 1), 
+    transform 0.44s cubic-bezier(0.34, 1.45, 0.64, 1);
+  overflow: hidden;
+}
+
+/* Water Sheen Stream Wave across the sliding pill */
+.dock-liquid-pour-pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.85) 50%, 
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: waterPillFlow 2.8s infinite ease-in-out;
+}
+
+@keyframes waterPillFlow {
+  0% { transform: translateX(-100%); }
+  45%, 100% { transform: translateX(100%); }
+}
+
+/* Radial Water Droplet Ripple Effect */
+.water-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(229, 195, 120, 0.4) 45%, transparent 75%);
+  transform: scale(0);
+  animation: waterRippleExpand 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes waterRippleExpand {
+  0% {
+    transform: scale(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3.8);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   LIQUID SKELETON LOADING SYSTEM
+   ========================================================================== */
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(226, 232, 240, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  color: transparent !important;
+}
+
+.skeleton-shimmer * {
+  visibility: hidden !important;
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.85) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  animation: skeletonPourWave 1.35s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes skeletonPourWave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-product-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.skeleton-img-box {
+  width: 100%;
+  height: 110px;
+  border-radius: 14px;
+}
+
+.skeleton-text-line {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.skeleton-btn-pill {
+  width: 100%;
+  height: 32px;
+  border-radius: 9999px;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   APP SPLASH LOADER (AUTHENTIC LOGO & FLUID PROGRESS)
+   ========================================================================== */
+
+.app-splash-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(180deg, #F5F8FC 0%, #E3E9F3 50%, #D8E0ED 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s ease;
+  animation: splashAutoDismiss 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  pointer-events: auto;
+}
+
+@keyframes splashAutoDismiss {
+  0% { opacity: 1; visibility: visible; }
+  80% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+.app-splash-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 290px;
+  padding: 24px;
+}
+
+.splash-logo-img {
+  width: 150px;
+  height: auto;
+  max-height: 75px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12));
+  animation: splashLogoPulse 2s infinite ease-in-out;
+}
+
+@keyframes splashLogoPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.12));
+  }
+  50% {
+    transform: scale(1.035);
+    filter: drop-shadow(0 12px 24px rgba(212, 175, 55, 0.32));
+  }
+}
+
+.splash-water-progress-track {
+  width: 160px;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(203, 213, 225, 0.75);
+  margin-top: 22px;
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-water-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #E5C378 0%, #D4AF37 50%, #F5F1E6 100%);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.65);
+  animation: splashProgressFill 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes splashProgressFill {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.splash-water-pour-tag {
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: #4A5568;
+  margin-top: 14px;
+}
+

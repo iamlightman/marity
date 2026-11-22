@@ -1,0 +1,24 @@
+{
+  "name": "Marity Trade Fragrances",
+  "short_name": "Marity Trade",
+  "start_url": "index.php",
+  "display": "standalone",
+  "background_color": "#11151F",
+  "theme_color": "#E5C378",
+  "orientation": "portrait",
+  "description": "Ultra-clean liquid metal mobile commerce experience for Marity Trade fragrances.",
+  "icons": [
+    {
+      "src": "assets/marity_logo_icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/marity_logo_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
