@@ -15,11 +15,11 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.marity.trade
+        bundle_identifier: com.maritytrade.app
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
-        APP_ID: "com.marity.trade"
+        APP_ID: "com.maritytrade.app"
         DEVELOPMENT_TEAM: "T3RLFNGN9A"
       xcode: latest
       cocoapods: default
