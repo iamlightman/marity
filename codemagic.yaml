@@ -201,6 +201,7 @@ workflows:
             cp -R tools/android_assets/mipmap-* android/app/src/main/res/ 2>/dev/null || true
             cp -R tools/android_assets/drawable* android/app/src/main/res/ 2>/dev/null || true
             cp -R tools/android_assets/values/* android/app/src/main/res/values/ 2>/dev/null || true
+            rm -f android/app/src/main/res/values/ic_launcher_background.xml 2>/dev/null || true
           fi
           
           # Enforce Google Play compliance (no unnecessary permissions)
@@ -208,6 +209,7 @@ workflows:
           
           echo ">>> Syncing Capacitor Android..."
           npx cap sync android
+          rm -f android/app/src/main/res/values/ic_launcher_background.xml 2>/dev/null || true
       - name: Build & Sign Android Release Bundle (.aab) & APK
         script: |
           set -e
@@ -368,8 +370,10 @@ workflows:
             cp -R tools/android_assets/mipmap-* android/app/src/main/res/ 2>/dev/null || true
             cp -R tools/android_assets/drawable* android/app/src/main/res/ 2>/dev/null || true
             cp -R tools/android_assets/values/* android/app/src/main/res/values/ 2>/dev/null || true
+            rm -f android/app/src/main/res/values/ic_launcher_background.xml 2>/dev/null || true
           fi
           npx cap sync android
+          rm -f android/app/src/main/res/values/ic_launcher_background.xml 2>/dev/null || true
       - name: Build Debug APK
         script: |
           set -e
