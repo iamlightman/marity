@@ -63,6 +63,15 @@ workflows:
           
           echo ">>> Syncing Capacitor..."
           npx cap sync ios
+          
+          # Re-apply custom Info.plist with iPad orientations & fullscreen flag
+          if [ -f "tools/ios_assets/Info.plist" ]; then
+            cp tools/ios_assets/Info.plist ios/App/App/Info.plist 2>/dev/null || true
+          fi
+          
+          # Set minimum iOS deployment target to 15.0 for App Store compliance
+          sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/IPHONEOS_DEPLOYMENT_TARGET = 15.0;/g' ios/App/App.xcodeproj/project.pbxproj 2>/dev/null || true
+          sed -i '' "s/platform :ios, '13.0'/platform :ios, '15.0'/g" ios/App/Podfile 2>/dev/null || true
       - name: Install CocoaPods dependencies
         script: |
           echo ">>> Installing CocoaPods..."
